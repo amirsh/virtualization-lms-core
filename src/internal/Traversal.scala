@@ -87,7 +87,7 @@ trait NestedGraphTraversal extends GraphTraversal with CodeMotion {
       scopeCache(s) = stm
 
     //TR: wip!
-
+    /*
     def deps(st: List[Sym[Any]]): List[Stm] = //st flatMap (scopeCache.get(_).toList)
       {
         val l1 = st sortBy(_.id) flatMap (scopeCache.get(_).toList) distinct; // need distinc??
@@ -98,7 +98,11 @@ trait NestedGraphTraversal extends GraphTraversal with CodeMotion {
         }*/
         l1
       }
+    */
     
+    def deps(st: List[Sym[Any]]): List[Stm] = 
+      scope.filter(d => (st intersect d.lhs).nonEmpty) 
+        
     val fixed = new mutable.HashMap[Any,List[Sym[Any]]]
     def allSyms(r: Any) = fixed.getOrElse(r, syms(r) ++ softSyms(r))
 
